@@ -12,13 +12,18 @@ final class WeatherForecastInitial extends WeatherForecastState {}
 final class WeatherForecastDataLoading extends WeatherForecastState {}
 
 final class WeatherForecastDataLoaded extends WeatherForecastState {
-  final List<WeatherModel> fiveDayForecasts;
+  final WeatherModel weather;
 
-  const WeatherForecastDataLoaded({required this.fiveDayForecasts});
+  const WeatherForecastDataLoaded({required this.weather});
+
+  @override
+  List<Object> get props => [
+        weather,
+      ];
 }
 
 final class WeatherForecastErrorState extends WeatherForecastState {
-  final String error;
+  final String? error;
 
   const WeatherForecastErrorState({required this.error});
 }

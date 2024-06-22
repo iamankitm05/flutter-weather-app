@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:weather_app/config/routes/app_router.dart';
 import 'package:weather_app/config/themes/app_themes.dart';
 import 'package:weather_app/core/utils/di_injector.dart';
-import 'package:weather_app/presentation/blocs/app_theme_cubit/app_theme_cubit.dart';
+import 'package:weather_app/config/themes/app_theme_cubit/app_theme_cubit.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await initDependencies();
+  FlutterNativeSplash.remove();
   runApp(const MyApp());
 }
 
@@ -20,7 +23,7 @@ class MyApp extends StatelessWidget {
       bloc: getIt<AppThemeCubit>(),
       builder: (context, state) {
         return MaterialApp.router(
-          title: "Weather Forecast",
+          title: "Weather App",
           debugShowCheckedModeBanner: false,
           theme: AppThemes.lightTheme,
           darkTheme: AppThemes.darkTheme,

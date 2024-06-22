@@ -1,6 +1,6 @@
 enum AppRoutes {
-  weatherReportScreen(
-    name: "weather_report",
+  weatherScreen(
+    name: "weather",
     path: "/",
   );
 

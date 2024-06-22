@@ -1,33 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather_app/core/utils/di_injector.dart';
-import 'package:weather_app/presentation/blocs/app_theme_cubit/app_theme_cubit.dart';
+import 'package:weather_app/config/themes/app_theme_cubit/app_theme_cubit.dart';
+import 'package:gap/gap.dart';
 
 class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
   const CustomAppbar({
     super.key,
-    this.padding,
   });
-
-  final EdgeInsets? padding;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: double.infinity,
-      padding: padding,
-      color: Theme.of(context).appBarTheme.backgroundColor,
-      child: Row(
-        children: [
-          Text(
-            "Weather Forecast",
-            style: Theme.of(context).textTheme.titleLarge,
-          ),
-          const Spacer(),
-          BlocBuilder<AppThemeCubit, AppThemeState>(
-            bloc: getIt<AppThemeCubit>(),
-            builder: (context, state) {
-              return DropdownButton(
+    final horizontalPadding = MediaQuery.sizeOf(context).width * 0.05;
+    return AppBar(
+      title: const Text("Weather App"),
+      titleSpacing: horizontalPadding,
+      actions: [
+        BlocBuilder<AppThemeCubit, AppThemeState>(
+          bloc: getIt<AppThemeCubit>(),
+          builder: (context, state) {
+            return DropdownButtonHideUnderline(
+              child: DropdownButton(
                 value: switch (state) {
                   AppThemeSystem() => ThemeMode.system,
                   AppThemeLight() => ThemeMode.light,
@@ -52,11 +45,12 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
                     getIt<AppThemeCubit>().changeTheme(themeMode);
                   }
                 },
-              );
-            },
-          ),
-        ],
-      ),
+              ),
+            );
+          },
+        ),
+        Gap(horizontalPadding),
+      ],
     );
   }
 

@@ -6,3 +6,9 @@ sealed class WeatherForecastEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
+
+class GetWeatherForecast extends WeatherForecastEvent {
+  final String query;
+
+  const GetWeatherForecast({required this.query});
+}
